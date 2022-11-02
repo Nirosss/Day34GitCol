@@ -25,11 +25,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       locService.addLoc(name, lat, lng)
       addMarker()
     })
-    const locationButton = document.createElement('button')
-    locationButton.classList.add('my-location')
-    locationButton.innerHTML = `<img src="img/my-location.png" />`
-    gMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton)
-    locationButton.addEventListener('click', onPanToUserLoc)
+    // const locationButton = document.createElement('button')
+    // locationButton.classList.add('my-location')
+    // locationButton.innerHTML = `<img src="img/my-location.png" />`
+    // gMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton)
+    // locationButton.addEventListener('click', onPanToUserLoc)
   })
 }
 
