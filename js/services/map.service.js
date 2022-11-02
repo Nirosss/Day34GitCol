@@ -12,26 +12,19 @@ var gMap
 window.initMap = initMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-  console.log('InitMap')
   return _connectGoogleApi().then(() => {
     console.log('google available')
     gMap = new google.maps.Map(document.querySelector('#map'), {
       center: { lat, lng },
       zoom: 15,
     })
-    const uluru = { lat: -25.363, lng: 131.044 }
-    const contentString = '<h1>HELOO</h1>'
-    const infowindow = new google.maps.InfoWindow()
-
     gMap.addListener('click', (ev) => {
       const name = prompt('Place name?', 'New Place')
       const lat = ev.latLng.lat()
       const lng = ev.latLng.lng()
-      const NewPlace = { lat: lat, lng: lng }
-      locService.addLoc('name', lat, lng)
+      locService.addLoc(name, lat, lng)
       addMarker()
     })
-    console.log('Map!', gMap)
   })
 }
 
