@@ -12,6 +12,7 @@ var gMap
 window.initMap = initMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
+    console.log(lat, lng)
     return _connectGoogleApi().then(() => {
         console.log('google available')
         gMap = new google.maps.Map(document.querySelector('#map'), {

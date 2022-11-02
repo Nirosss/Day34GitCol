@@ -50,9 +50,10 @@ function _updateLocalStorage(LOCATIONS_KEY, locs) {
 function deleteLoc(id) {
     for (var i = 0; i < locs.length; i++) {
         if (locs[i].id === id) {
+            const currLoc = locs[i]
             locs.splice(i, 1)
             _updateLocalStorage(LOCATIONS_KEY, locs)
-            return
+            return currLoc
         }
     }
 }
