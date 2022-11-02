@@ -1,3 +1,5 @@
+import { locService } from './loc.service.js'
+
 export const mapService = {
     initMap,
     addMarker,
@@ -7,16 +9,29 @@ export const mapService = {
 // Var that is used throughout this Module (not global)
 
 var gMap
+window.initMap = initMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap')
     return _connectGoogleApi().then(() => {
         console.log('google available')
         gMap = new google.maps.Map(document.querySelector('#map'), {
             center: { lat, lng },
             zoom: 15,
         })
-        console.log('Map!', gMap)
+        gMap.addListener('click', (ev) => {
+            const name = prompt('Place name?', 'New Place')
+            const lat = ev.latLng.lat()
+            const lng = ev.latLng.lng()
+            locService.addLoc(name, lat, lng)
+            addMarker()
+        })
+        const locationButton = document.createElement('button')
+        locationButton.classList.add('my-location')
+        locationButton.innerHTML = `<img src="img/my-location.png" />`
+        gMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+            locationButton
+        )
+        locationButton.addEventListener('click', onGetUserPos)
     })
 }
 

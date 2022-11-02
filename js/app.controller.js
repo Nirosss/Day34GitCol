@@ -13,7 +13,6 @@ function onInit() {
     mapService
         .initMap()
         .then(() => {
-            console.log('Map is ready')
             onGetLocs()
         })
         .catch(() => console.log('Error: cannot init map'))
