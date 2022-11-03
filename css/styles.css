@@ -137,7 +137,7 @@ h1 {
   all: unset;
 }
 .table-btn {
-  background-position: center;
+  
   cursor: pointer;
   background-color: azure;
   border-radius: 3px;
@@ -145,16 +145,21 @@ h1 {
   padding-right: 3px;
   border: #2a6288 solid 1px;
 }
-.place-name{
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-transform: capitalize;
+.place-name {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 .my-location {
-  width: 80px;
+  width: 62px;
   height: 53px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 50px;
+  background: rgb(224, 217, 217);
+  background: linear-gradient(
+    90deg,
+    rgb(186, 179, 179) 2%,
+    rgba(251, 251, 251, 1) 9%
+  );
+
   cursor: pointer;
 }
 @media (min-width: 480px) {

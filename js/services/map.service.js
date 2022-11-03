@@ -112,6 +112,6 @@ function geocodeLatLng(lat, lng, map, infowindow) {
         window.alert('No results found')
       }
     })
-    .then(() => locService.addLoc(clickedAddress, lat, lng))
+    .then(() => locService.addLoc('New Place',clickedAddress, lat, lng))
     .catch((e) => window.alert('Geocoder failed due to: ' + e))
 }

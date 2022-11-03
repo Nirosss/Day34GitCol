@@ -4,6 +4,7 @@ export const locService = {
     getLocs,
     addLoc,
     deleteLoc,
+    setLocationName
 }
 const LOCATIONS_KEY = 'localLocations'
 const locs = storageService.loadFromStorage(LOCATIONS_KEY) || [
@@ -12,14 +13,16 @@ const locs = storageService.loadFromStorage(LOCATIONS_KEY) || [
         name: 'Greatplace',
         lat: 32.047104,
         lng: 34.832384,
+        address: 'Sderot HaOranim 1, Ramat Gan, Israel',
         createdAt: Date.now(),
         updatedAt: Date.now(),
     },
     {
         id: 2,
         name: 'Neveragain',
-        lat: 32.047201,
-        lng: 34.832581,
+        lat: 39.013273088627436,
+        lng: 125.71467127166045,
+        address:'Pyongyang, North Korea',
         createdAt: Date.now(),
         updatedAt: Date.now(),
     },
@@ -34,11 +37,11 @@ function getLocs() {
     })
 }
 
-function addLoc(name, lat, lng) {
+function addLoc(name,address, lat, lng) {
     const id = Math.random() * (locs.length + 1)
     const createdAt = Date.now()
     const updatedAt = createdAt
-    locs.push({ id, name, lat, lng, createdAt, updatedAt })
+    locs.unshift({ id, name, lat, lng,address, createdAt, updatedAt })
     _updateLocalStorage(LOCATIONS_KEY, locs)
     onGetLocs()
 }
@@ -56,4 +59,9 @@ function deleteLoc(id) {
             return currLoc
         }
     }
+}
+
+function setLocationName(name){
+    locs[0].name = name
+    onGetLocs()
 }

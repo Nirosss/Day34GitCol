@@ -12,6 +12,7 @@ window.onCopyLoc = onCopyLoc
 window.onAddressSearch = onAddressSearch
 window.onSetLocationName = onSetLocationName
 
+
 function onInit() {
   // const params = new Proxy(new URLSearchParams(window.location.search), {
   //     get: (searchParams, prop) => searchParams.get(prop),
@@ -47,20 +48,24 @@ function onGetLocs() {
     //     2
     // )
     // let locsHTML = '<ul>'
-    let locsHTML = '<table class="rwd-table">'
+    let locsHTML = `<th>Name</th>
+    <th>Address</th>
+    <th>Actions</th>
+    `
     locs.map((loc) => {
-      const { id, lat, lng, name } = loc
+      const { id, lat, lng, name, address } = loc
       locsHTML += `
             <tr>
                 <td class="place-name">${name}</td>
+                <td class="place-address">${address}</td>
                 <td><button class="table-btn" onclick="onChooseLoc(${lat}, ${lng})">GoTo</button></td>
                 <td><button class="table-btn" onclick="onCopyLoc(${lat}, ${lng})")>Copy Link</button></td>
                 <td><button class="table-btn" onclick="onDeleteLoc(${id})">Delete</button></td>
             </tr>`
       mapService.addMarker({ lat, lng }, name)
     })
-    locsHTML += '</table>'
-    document.querySelector('.container').innerHTML = locsHTML
+
+    document.querySelector('.locs-table').innerHTML = locsHTML
   })
 }
 
@@ -116,5 +121,6 @@ function onAddressSearch(ev) {
 
 function onSetLocationName(ev) {
   ev.preventDefault()
-  console.log('WEW GOT',document.querySelector('[name=nameinput]').value)
+  console.log('WEW GOT', document.querySelector('[name=nameinput]').value)
+  locService.setLocationName(document.querySelector('[name=nameinput]').value)
 }
