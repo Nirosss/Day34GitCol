@@ -4,17 +4,18 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
+    codeAddress
 }
 
 // Var that is used throughout this Module (not global)
-
+var geocoder
 var gMap
+var marker
 window.initMap = initMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log(lat, lng)
     return _connectGoogleApi().then(() => {
-        console.log('google available')
+        geocoder = new google.maps.Geocoder()
         gMap = new google.maps.Map(document.querySelector('#map'), {
             center: { lat, lng },
             zoom: 15,
@@ -28,8 +29,8 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
         const locationButton = document.createElement('button')
         locationButton.classList.add('my-location')
-        locationButton.innerHTML = `<img src="img/my-location.png" />`
-        gMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+        locationButton.innerHTML = `<img src="img/my-location.png" title="Go To Your Location"/>`
+        gMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
             locationButton
         )
         locationButton.addEventListener('click', onGetUserPos)
@@ -37,7 +38,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function addMarker(loc, title = '') {
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title: title,
@@ -63,3 +64,21 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+function codeAddress(address) {
+    console.log(address)
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        gMap.setCenter(results[0].geometry.location)
+        marker = new google.maps.Marker({
+            map: gMap,
+            position: results[0].geometry.location
+        })
+         var lat= (results[0].geometry.location.lat())
+         var lng= (results[0].geometry.location.lng())
+         locService.addLoc(address, lat, lng)
+        } else {
+        alert('Geocode was not successful for the following reason: ' + status)
+      }
+    })
+  }

@@ -13,7 +13,7 @@ const locs = storageService.loadFromStorage(LOCATIONS_KEY) || [
         lat: 32.047104,
         lng: 34.832384,
         createdAt: Date.now(),
-        updatedAt: createdAt,
+        updatedAt: Date.now(),
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const locs = storageService.loadFromStorage(LOCATIONS_KEY) || [
         lat: 32.047201,
         lng: 34.832581,
         createdAt: Date.now(),
-        updatedAt: createdAt,
+        updatedAt: Date.now(),
     },
 ]
 

@@ -9,6 +9,7 @@ window.onGetUserPos = onGetUserPos
 window.onChooseLoc = onChooseLoc
 window.onDeleteLoc = onDeleteLoc
 window.onCopyLoc = onCopyLoc
+window.onAddressSearch = onAddressSearch
 
 function onInit() {
     // const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -46,20 +47,20 @@ function onGetLocs() {
         //     2
         // )
         // let locsHTML = '<ul>'
-        let locsHTML = '<table>'
+        let locsHTML ='<table class="rwd-table">'
         locs.map((loc) => {
             const { id, lat, lng, name } = loc
             locsHTML += `
             <tr>
-                <td>${name}</td>
-                <td onclick="onDeleteLoc(${id})">Delete</td>
-                <td onclick="onChooseLoc(${lat}, ${lng})">Go</td>
-                <td onclick="onCopyLoc(${lat}, ${lng})")>Copy Link</td>
+                <td class="place-name">${name}</td>
+                <td><button class="table-btn" onclick="onChooseLoc(${lat}, ${lng})">GoTo</button></td>
+                <td><button class="table-btn" onclick="onCopyLoc(${lat}, ${lng})")>Copy Link</button></td>
+                <td><button class="table-btn" onclick="onDeleteLoc(${id})">Delete</button></td>
             </tr>`
             mapService.addMarker({ lat, lng }, name)
         })
         locsHTML += '</table>'
-        document.querySelector('.locs').innerHTML = locsHTML
+        document.querySelector('.container').innerHTML = locsHTML
     })
 }
 
@@ -105,4 +106,10 @@ function onCopyLoc(lat, lng) {
     navigator.clipboard.writeText(
         `https://github.io/Nirosss/Day34GitCol/index.html?lat=${lat}&lng=${lng}`
     )
+}
+
+function onAddressSearch(ev){
+    ev.preventDefault()
+    let address = ev.target.search.value
+    mapService.codeAddress(address)
 }
