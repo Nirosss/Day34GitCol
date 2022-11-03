@@ -15,16 +15,18 @@ window.initMap = initMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi().then(() => {
-        geocoder = new google.maps.Geocoder()
         gMap = new google.maps.Map(document.querySelector('#map'), {
             center: { lat, lng },
             zoom: 15,
-        })
+        }
+        )
+        geocoder = new google.maps.Geocoder()
+        
         gMap.addListener('click', (ev) => {
-            const name = prompt('Place name?', 'New Place')
             const lat = ev.latLng.lat()
             const lng = ev.latLng.lng()
-            locService.addLoc(name, lat, lng)
+            const infowindow = new google.maps.InfoWindow()
+            geocodeLatLng(lat,lng, gMap, infowindow) 
             addMarker()
         })
         const locationButton = document.createElement('button')
@@ -34,7 +36,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             locationButton
         )
         locationButton.addEventListener('click', onGetUserPos)
+        
     })
+
 }
 
 function addMarker(loc, title = '') {
@@ -81,4 +85,33 @@ function codeAddress(address) {
         alert('Geocode was not successful for the following reason: ' + status)
       }
     })
+  }
+
+  function geocodeLatLng(lat,lng, map, infowindow) {
+    let clickedAddress
+    const latlng = {
+      lat,
+      lng }
+  
+    geocoder
+      .geocode({ location: latlng })
+      .then((response) => {
+        if (response.results[0]) {
+          map.setZoom(11);
+  
+          const marker = new google.maps.Marker({
+            position: latlng,
+            map: map,
+          });
+  
+          infowindow.setContent(response.results[0].formatted_address);
+          infowindow.open(map, marker);
+          console.log(response.results[0].formatted_address)
+          clickedAddress = (response.results[0].formatted_address)
+        } else {
+          window.alert("No results found");
+        }
+      })
+      .then(() => locService.addLoc(clickedAddress, lat, lng))
+      .catch((e) => window.alert("Geocoder failed due to: " + e));
   }

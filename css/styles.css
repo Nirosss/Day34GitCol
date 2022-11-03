@@ -140,7 +140,7 @@ h1 {
   background-position: center;
   cursor: pointer;
   background-color: azure;
-  border-radius: 2px;
+  border-radius: 3px;
   padding-left: 3px;
   padding-right: 3px;
   border: #2a6288 solid 1px;
@@ -151,9 +151,10 @@ h1 {
     text-transform: capitalize;
 }
 .my-location {
-  height: 45px;
+  width: 80px;
+  height: 53px;
   background-color: rgb(255, 255, 255);
-  border-radius: 15px;
+  border-radius: 50px;
   cursor: pointer;
 }
 @media (min-width: 480px) {
